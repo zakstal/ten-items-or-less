@@ -47,16 +47,18 @@ componentWillMount() {
   render() {
     return (
       <View style={styles.container}>
-        <Camera
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.camera}
-          onBarCodeRead={this._onBarCodeRead}
-          type={this.state.cameraType}>
-          <View style={styles.bracketLeft}></View>
-          <View style={styles.bracketRight}></View>
-        </Camera>
+        <View style={styles.cameraContainer}>
+          <Camera
+            ref={(cam) => {
+              this.camera = cam;
+            }}
+            style={styles.camera}
+            onBarCodeRead={this._onBarCodeRead}
+            type={this.state.cameraType}>
+            <View style={styles.bracketLeft}></View>
+            <View style={styles.bracketRight}></View>
+          </Camera>
+        </View>
         <ScrollView style={styles.items}>
           <Item {...inventory['0099482414221']}/>
           <Item {...inventory['0073124008955']}/>
@@ -77,14 +79,6 @@ componentWillMount() {
             "Type: " + e.type + "\nData: " + e.data
         );
     }
-
-  takePicture() {
-    const options = {};
-    //options.location = ...
-    this.camera.capture({metadata: options})
-      .then((data) => console.log(data))
-      .catch(err => console.error(err));
-  }
 }
 
 const styles = StyleSheet.create({
@@ -98,10 +92,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,  
     borderBottomWidth: 1,  
     borderRightWidth: 0,  
-    // backgroundColor: 'transperent',
     height: '60%',
     width: 30,
-    // margin: 50,
   },
   bracketRight: {
     borderColor: '#555555',
@@ -109,21 +101,22 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,  
     borderBottomWidth: 1,  
     borderRightWidth: 1, 
-    // backgroundColor: 'transperent',
     height: '60%',
     width: 30,
-    // margin: 50,
   },
   items: {
     height: 500,
   },
+  cameraContainer: {
+    height: 170,
+  },
   camera: {
     flex: 1,
-    // margin: 20,
-    height: 50,
+    height: '10%',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   capture: {
     flex: 0,
