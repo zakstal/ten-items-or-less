@@ -20,7 +20,7 @@ class CheckoutFooter extends Component {
           <Text style={styles.checkoutText}>CHECKOUT</Text>
         </View>
         <View>
-          <Text style={styles.checkoutTotal}>Total: 0</Text>
+          <Text style={styles.checkoutTotal}>Total: ${total}</Text>
         </View>
       </View>
     );

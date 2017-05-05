@@ -20,7 +20,7 @@ class Scanner extends Component {
         cameraType: Camera.constants.Type.back
     }
   }
-  
+
   render() {
     return (
         <Camera
@@ -28,19 +28,12 @@ class Scanner extends Component {
               this.camera = cam;
             }}
             style={styles.camera}
-            onBarCodeRead={this._onBarCodeRead}
+            onBarCodeRead={this.props.onBarCodeRead}
             type={this.state.cameraType}>
             {this.props.children}
           </Camera>
     );
   }
-     _onBarCodeRead(e) {
-        // this.setState({showCamera: false});
-        AlertIOS.alert(
-            "Barcode Found!",
-            "Type: " + e.type + "\nData: " + e.data
-        );
-    }
 }
 
 const styles = StyleSheet.create({

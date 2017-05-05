@@ -38,26 +38,58 @@ var inventory = {
 
 class ReactProject extends Component {
 
+  componentWillMount() {
+    this.state = {
+      canScan: true,
+      items: [],
+      total: 0,
+    }
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.cameraContainer}>
-          <Scanner>
+          <Scanner
+            onBarCodeRead={(e) => this.onBarCodeRead(e)}
+          >
             <View style={styles.bracketLeft}></View>
             <View style={styles.bracketRight}></View>
           </Scanner>
         </View>
         <ScrollView style={styles.items}>
-          <Item {...inventory['0099482414221']}/>
-          <Item {...inventory['0073124008955']}/>
-          <Item {...inventory['0073124008955']}/>
-          <Item {...inventory['0099482414221']}/>
-          <Item {...inventory['0099482414221']}/>
-          <Item {...inventory['0099482414221']}/>
+         {  this.state.items && this.state.items.length 
+            ? this.state.items.map((item, i) =>  <Item key={item.name + i}{...item}/>)
+            : <Text style={styles.noItems}>No items scanned</Text>
+         }
         </ScrollView>
-        <CheckoutFooter/>
+        <CheckoutFooter total={this.state.total}/>
       </View>
     );
+  }
+
+  onBarCodeRead(e) {
+    let item = inventory[e.data];
+    if (!this.state.canScan) {
+      return;
+    }
+
+    if (item) {
+      let items = this.state.items;
+      let total = this.state.total + item.price;
+      items.push(item)
+      this.setState({items, total})
+    } else {
+      AlertIOS.alert(
+          "Barcode Found! but item does not exist in inventory. Please contanct store manager",
+          "Type: " + e.type + "\nData: " + e.data
+      );
+    }
+
+    this.setState({canScan: false});
+    const timeout = setTimeout(() => {
+        this.setState({canScan: true});
+    }, 2000);
   }
 }
 
@@ -97,6 +129,11 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 10,
     margin: 40
+  },
+  noItems: {
+    padding: 20,
+    textAlign: 'center',
+    // font-family: "LeagueGothic","Lucida Sans","Lucida Grande",sans-serif;
   }
 });
 
