@@ -13,6 +13,7 @@ import {
 import Camera from 'react-native-camera';
 import Item from './components/Item';
 import CheckoutFooter from './components/CheckoutFooter';
+import Scanner from './components/Scanner';
 
 var inventory = {
   '0099482414221': {
@@ -37,27 +38,14 @@ var inventory = {
 
 class ReactProject extends Component {
 
-componentWillMount() {
-  this.state = {
-      showCamera: true,
-      cameraType: Camera.constants.Type.back
-  }
-}
-
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.cameraContainer}>
-          <Camera
-            ref={(cam) => {
-              this.camera = cam;
-            }}
-            style={styles.camera}
-            onBarCodeRead={this._onBarCodeRead}
-            type={this.state.cameraType}>
+          <Scanner>
             <View style={styles.bracketLeft}></View>
             <View style={styles.bracketRight}></View>
-          </Camera>
+          </Scanner>
         </View>
         <ScrollView style={styles.items}>
           <Item {...inventory['0099482414221']}/>
@@ -71,14 +59,6 @@ componentWillMount() {
       </View>
     );
   }
-
-   _onBarCodeRead(e) {
-        // this.setState({showCamera: false});
-        AlertIOS.alert(
-            "Barcode Found!",
-            "Type: " + e.type + "\nData: " + e.data
-        );
-    }
 }
 
 const styles = StyleSheet.create({
@@ -109,14 +89,6 @@ const styles = StyleSheet.create({
   },
   cameraContainer: {
     height: 170,
-  },
-  camera: {
-    flex: 1,
-    height: '10%',
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
   },
   capture: {
     flex: 0,
