@@ -2,6 +2,7 @@ import React from 'react'
 import Moment from 'moment'
 // import Checkin from './components/Checkin';
 import ScannerPage from './pages/ScannerPage';
+import CheckoutPage from './pages/CheckoutPage';
 import {
     StackNavigator,
 } from 'react-navigation';
@@ -12,7 +13,7 @@ import {
 
 export default App = StackNavigator({
                                Main: {screen: ScannerPage},
-                              //  Checkin: {screen: Checkin},
+                               Checkout: {screen: CheckoutPage},
                            });
 
 AppRegistry.registerComponent('ReactProject', () => App);

@@ -10,7 +10,6 @@ import {
   AlertIOS,
   ScrollView
 } from 'react-native';
-import Camera from 'react-native-camera';
 import Item from '../components/Item';
 import CheckoutFooter from '../components/CheckoutFooter';
 import Scanner from '../components/Scanner';
@@ -37,6 +36,9 @@ var inventory = {
 
 
 class ReactProject extends Component {
+    static navigationOptions = {
+        title: 'Scanner',
+    };
 
   componentWillMount() {
     this.state = {
