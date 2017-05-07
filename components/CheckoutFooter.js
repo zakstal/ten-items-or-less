@@ -8,16 +8,23 @@ import {
   TouchableHighlight,
   View,
   AlertIOS,
-  Image
+  Image,
+  Button
 } from 'react-native';
 
 class CheckoutFooter extends Component {
   render() {
-    const { total } = this.props;
+    const { total, onSubmit } = this.props;
     return (
       <View style={styles.total}>
-        <View style={styles.checkout}>
-          <Text style={styles.checkoutText}>CHECKOUT</Text>
+        <View 
+        >
+          <Text 
+            style={styles.checkout}
+            onPress={onSubmit}
+          >
+            CHECKOUT
+          </Text>
         </View>
         <View>
           <Text style={styles.checkoutTotal}>Total: ${total}</Text>
@@ -43,6 +50,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#81C22D',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#ffffff',
+    letterSpacing: 2,
+    fontSize: 12,
+    textAlign: 'center',
+    //TODO alignment on text here will not work properly on ios and android
+    textAlignVertical: 'center',
+    paddingTop: 18,
     // font-family: 'Lucida Sans','Lucida Grande',sans-serif,
   },
   checkoutText: {

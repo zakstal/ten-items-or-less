@@ -28,7 +28,7 @@ class CheckoutPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        Checkout view
+        <Text>Checkout view</Text>
       </View>
     );
   }

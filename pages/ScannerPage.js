@@ -10,9 +10,13 @@ import {
   AlertIOS,
   ScrollView
 } from 'react-native';
+import fetch from 'superagent';
 import Item from '../components/Item';
 import CheckoutFooter from '../components/CheckoutFooter';
 import Scanner from '../components/Scanner';
+import Items from '../models/Items';
+
+const items = new Items();
 
 var inventory = {
   '0099482414221': {
@@ -41,6 +45,7 @@ class ReactProject extends Component {
     };
 
   componentWillMount() {
+    this.canScan = true;
     this.state = {
       canScan: true,
       items: [],
@@ -60,39 +65,83 @@ class ReactProject extends Component {
           </Scanner>
         </View>
         <ScrollView style={styles.items}>
-         {  this.state.items && this.state.items.length 
-            ? this.state.items.map((item, i) =>  <Item key={item.name + i}{...item}/>)
+         {  items && items.length 
+            ? items.map((item, i) =>  <Item key={item.name + i}{...item}/>)
             : <Text style={styles.noItems}>No items scanned</Text>
          }
         </ScrollView>
-        <CheckoutFooter total={this.state.total}/>
+        <CheckoutFooter 
+            total={this.state.total}
+            onSubmit={() => this.navigateTOCheckout()}
+        />
       </View>
     );
   }
 
+  getInfo(id) {
+    return fetch.get(`https://www.upccodesearch.com/api/v1/search?query=${id}`)
+    .catch(error => {
+      console.error('error', error)
+      AlertIOS.alert('error ' + error)
+    })
+  }
+
   onBarCodeRead(e) {
-    let item = inventory[e.data];
-    if (!this.state.canScan) {
+
+    // let item = inventory[e.data];
+    if (!this.state.canScan || !this.canScan) {
       return;
     }
 
-    if (item) {
-      let items = this.state.items;
-      let total = this.state.total + item.price;
-      items.push(item)
-      this.setState({items, total})
-    } else {
-      AlertIOS.alert(
-          "Barcode Found! but item does not exist in inventory. Please contanct store manager",
-          "Type: " + e.type + "\nData: " + e.data
-      );
-    }
+    this.canScan = false
+    this.getInfo(e.data).then(res => {
+      const { body } = res;
+      let item = null;
+      console.log("body ----------", body)
+      
+      // if (body && body.length) {
+      //   item = {
+      //     imgSrc: body[0].image,
+      //     name: body[0].title && body[0].title.slice(0, 19) + '...',
+      //     price: body[0].price || 0
+      //   }
+      // }
 
-    this.setState({canScan: false});
-    const timeout = setTimeout(() => {
-        this.setState({canScan: true});
-    }, 2000);
+      console.log("items ----------", items)
+      if (body && body.length) {
+        item = body[0];
+        items.add(item, 'upcCodeSearch')
+             .then(() => {
+                item = items.last();
+                let total = this.state.total + item.price;
+
+                this.setState({total})
+                AlertIOS.alert(`Scanned! ${item.name}`)
+             })
+              .catch(err => {
+                AlertIOS.alert(
+                    "Barcode Found! but item does not exist in inventory. Please contanct store manager",
+                    "Type: " + e.type + "\nData: " + e.data
+                );
+              })
+      } else {
+        AlertIOS.alert("No Item found");
+      }
+
+      this.setState({canScan: false});
+    
+      const timeout = setTimeout(() => {
+          this.setState({canScan: true});
+          this.canScan = true
+      }, 2000);
+
+    })
   }
+
+    navigateTOCheckout() {
+        const { navigate } = this.props.navigation;
+        navigate('Checkout');
+    }
 }
 
 const styles = StyleSheet.create({
