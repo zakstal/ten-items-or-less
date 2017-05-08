@@ -10,6 +10,7 @@ class Total {
 
         instance = this;
         this.total = 0;
+        this.paid = false;
     }
 
     add(amt) {
@@ -35,6 +36,14 @@ class Total {
     grandTotal() {
         const total = parseFloat(this.tax(), 10) + parseFloat(this.total, 10)
         return parseFloat(total, 10).toFixed(2);
+    }
+
+    pay() {
+        this.paid = true
+    }
+    
+    isComplete() {
+        return this.paid
     }
 }
 

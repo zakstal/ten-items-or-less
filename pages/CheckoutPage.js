@@ -30,9 +30,41 @@ class CheckoutPage extends Component {
       canScan: true,
       items: [],
       total: 0,
+      isCheckingOut: false
     }
   }
 
+  payNow() {
+    if (total.amount() === 0) {
+      AlertIOS.alert('no items in your cart')
+      return;
+    }
+
+    if (total.isComplete()) {
+      this.props.navigation.navigate('ItemsList');
+      return;
+    }
+    AlertIOS.alert(
+      'Your card ending in 5555 will be charged',
+      total.grandTotal(),
+        [
+          {text: 'Cancel', onPress: () => this.firstButtonPress()},
+          {text: 'Continue', onPress: () => this.secondButtonPress()},
+        ],
+    )
+  }
+firstButtonPress(value) {  
+  console.log(cancelled)
+}
+
+secondButtonPress(value) {  
+  this.setState({isCheckingOut: true})
+  let timeout = setTimeout(() => {
+    total.pay()
+    this.setState({isCheckingOut: false})
+    this.props.navigation.navigate('ItemsList');
+  }, 3000)
+}
   render() {
     return (
       <View style={styles.container}>
@@ -60,8 +92,9 @@ class CheckoutPage extends Component {
         </View>
         <Text 
             style={styles.payNow}
+            onPress={() => this.payNow()}
           >
-            PAY NOW
+           {total.isComplete() ? 'PAIED: SEE LIST': 'PAY NOW'}
         </Text>
       </View>
     );
@@ -96,9 +129,10 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
   },
   plus: {
-    padding: 5,
+    paddingBottom: 5,
     paddingTop: 0,
-    paddingLeft: 6,
+    paddingLeft: 7,
+    paddingRight: 3,
     borderColor: '#cccccc',
     borderWidth: 1,
     borderRadius: 2,
