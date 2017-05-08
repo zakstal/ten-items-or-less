@@ -11,6 +11,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 import Item from '../components/Item';
 import Items from '../models/Items';
 import Total from '../models/Total';
@@ -36,7 +37,14 @@ class CheckoutPage extends Component {
 
   payNow() {
     if (total.amount() === 0) {
-      AlertIOS.alert('no items in your cart')
+      AlertIOS.alert(
+        'No items in your cart',
+        null,
+         [
+          {text: 'Cancel', onPress: () => this.cancelled()},
+          {text: 'Go to scanner', onPress: () => this.goToScanner()},
+        ],
+      )
       return;
     }
 
@@ -46,26 +54,39 @@ class CheckoutPage extends Component {
     }
     AlertIOS.alert(
       'Your card ending in 5555 will be charged',
-      total.grandTotal(),
+      '$' + total.grandTotal(),
         [
-          {text: 'Cancel', onPress: () => this.firstButtonPress()},
-          {text: 'Continue', onPress: () => this.secondButtonPress()},
+          {text: 'Cancel', onPress: () => this.cancelled()},
+          {text: 'Continue', onPress: () => this.checkout()},
         ],
     )
   }
-firstButtonPress(value) {  
-  console.log(cancelled)
-}
+  goToScanner() {
+    this.props.navigation.navigate('Main');
+  }
 
-secondButtonPress(value) {  
-  this.setState({isCheckingOut: true})
-  let timeout = setTimeout(() => {
-    total.pay()
-    this.setState({isCheckingOut: false})
-    this.props.navigation.navigate('ItemsList');
-  }, 3000)
-}
+  cancelled(value) {  
+    console.log('cancelled')
+  }
+
+  checkout(value) {  
+    this.setState({isCheckingOut: true})
+    let timeout = setTimeout(() => {
+      total.pay()
+      this.setState({isCheckingOut: false})
+      this.props.navigation.navigate('ItemsList');
+    }, 3000)
+  }
   render() {
+
+    if (this.state.isCheckingOut) {
+      return (
+        <View style={styles.container}>
+          <Spinner visible={true} textContent={"Checking out..."} textStyle={{color: '#FFF'}} />
+        </View>
+      );
+    }
+
     return (
       <View style={styles.container}>
         <View style={styles.cc}>
@@ -132,7 +153,7 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingTop: 0,
     paddingLeft: 7,
-    paddingRight: 3,
+    paddingRight: 4,
     borderColor: '#cccccc',
     borderWidth: 1,
     borderRadius: 2,
@@ -167,7 +188,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     paddingTop: 18,
     height: 50,
-    marginTop: 20
+    marginTop: 21
   },
   items: {
     marginBottom: 40

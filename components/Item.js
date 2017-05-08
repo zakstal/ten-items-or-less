@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
     height: 100, 
     backgroundColor: '#fff',
     flexDirection: 'row',
+    paddingTop: 10,
+    paddingLeft: 10
 
     // padding: 10,
   },

@@ -22,6 +22,8 @@
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		175A323F1EBCFDF000793847 /* ReactProjectTests in Resources */ = {isa = PBXBuildFile; fileRef = 175A323E1EBCFDF000793847 /* ReactProjectTests */; };
+		175E2B121EC1337500532514 /* tenItemsOrLess.png in Resources */ = {isa = PBXBuildFile; fileRef = 175E2B111EC1337500532514 /* tenItemsOrLess.png */; };
+		175E2B2F1EC133B800532514 /* tenItemsOrLess.png in Resources */ = {isa = PBXBuildFile; fileRef = 175E2B2E1EC133B800532514 /* tenItemsOrLess.png */; };
 		21A258A4ADB845C1B6D8ED06 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B76F65B4CBC40708ABF7111 /* libRCTCamera.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -264,6 +266,8 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		172C16A21EBCCA4D00B8589D /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		175A323E1EBCFDF000793847 /* ReactProjectTests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ReactProjectTests; sourceTree = "<group>"; };
+		175E2B111EC1337500532514 /* tenItemsOrLess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tenItemsOrLess.png; path = ReactProject/Images.xcassets/tenItemsOrLess.png; sourceTree = "<group>"; };
+		175E2B2E1EC133B800532514 /* tenItemsOrLess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tenItemsOrLess.png; path = ../../../../tenItemsOrLess.png; sourceTree = "<group>"; };
 		29C6D09F3B944292AC8D4FC2 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* ReactProject-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ReactProject-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* ReactProject-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ReactProject-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -393,6 +397,8 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				175E2B2E1EC133B800532514 /* tenItemsOrLess.png */,
+				175E2B111EC1337500532514 /* tenItemsOrLess.png */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
@@ -883,8 +889,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				175E2B2F1EC133B800532514 /* tenItemsOrLess.png in Resources */,
 				175A323F1EBCFDF000793847 /* ReactProjectTests in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				175E2B121EC1337500532514 /* tenItemsOrLess.png in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

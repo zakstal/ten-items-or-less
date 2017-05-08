@@ -31,7 +31,16 @@ class CheckoutPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-       <Text>items list</Text>
+        <Text>Please show to a representative</Text>
+         <ScrollView style={styles.items}>
+         {  items.map((item, i) =>  
+              <Item 
+                key={item.name + i}
+                {...item}
+                
+              />)
+         }
+        </ScrollView>
       </View>
     );
   }
@@ -40,7 +49,6 @@ class CheckoutPage extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     flexDirection: 'column',
   },
 });

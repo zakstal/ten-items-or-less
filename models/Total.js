@@ -26,7 +26,7 @@ class Total {
     }
 
     amount() {
-        return parseFloat(this.total, 10);
+        return parseFloat(this.total, 10).toFixed(2);
     }
 
     tax() {

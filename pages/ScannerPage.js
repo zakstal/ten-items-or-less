@@ -58,7 +58,7 @@ class ReactProject extends Component {
                 }
                 {...item}
                 
-              />)
+              />).reverse()
             : <Text style={styles.noItems}>No items scanned</Text>
          }
         </ScrollView>
@@ -96,7 +96,7 @@ class ReactProject extends Component {
                 item = items.last();
                 total.add(item.price)
                 this.setState({total: total.amount()})
-                AlertIOS.alert(`Scanned! ${item.name}`)
+                // AlertIOS.alert(`Scanned! ${item.name}`)
              })
               .catch(err => {
                 AlertIOS.alert(
