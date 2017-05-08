@@ -15,29 +15,10 @@ import Item from '../components/Item';
 import CheckoutFooter from '../components/CheckoutFooter';
 import Scanner from '../components/Scanner';
 import Items from '../models/Items';
+import Total from '../models/Total';
 
 const items = new Items();
-
-var inventory = {
-  '0099482414221': {
-    name: 'Black beans',
-    brand: '360',
-    price: 1.19,
-    imgSrc: 'https://d2lnr5mha7bycj.cloudfront.net/product-image/file/primary_72efbac3-1c5f-49af-aec3-243cd1994a90.jpg'
-  },
-  '0073124008955': {
-    name: 'Smart Bagel',
-    brand: 'Toufayan',
-    price: 2.99,
-    imgSrc: 'http://www.theluxuryspot.com/wp-content/uploads/2014/12/smart_bagel.png'
-  },
-  1235: {
-    name: '',
-    price: 0,
-    imgSrc: ''
-  }
-}
-
+const total = new Total();
 
 class ReactProject extends Component {
     static navigationOptions = {
@@ -48,8 +29,8 @@ class ReactProject extends Component {
     this.canScan = true;
     this.state = {
       canScan: true,
-      items: [],
-      total: 0,
+      items,
+      total: total.amount(),
     }
   }
 
@@ -65,8 +46,19 @@ class ReactProject extends Component {
           </Scanner>
         </View>
         <ScrollView style={styles.items}>
-         {  items && items.length 
-            ? items.map((item, i) =>  <Item key={item.name + i}{...item}/>)
+         {  this.state.items && this.state.items.length 
+            ? this.state.items.map((item, i) =>  
+              <Item 
+                key={item.name + i}
+                onPressDelete={() => {
+                  items.remove(item.id)
+                  total.subtract(item.price)
+                  this.setState({items, total: total.amount()})
+                  }
+                }
+                {...item}
+                
+              />)
             : <Text style={styles.noItems}>No items scanned</Text>
          }
         </ScrollView>
@@ -79,7 +71,7 @@ class ReactProject extends Component {
   }
 
   getInfo(id) {
-    return fetch.get(`https://www.upccodesearch.com/api/v1/search?query=${id}`)
+    return fetch.get(`https://mf1psu4xh1.execute-api.us-east-1.amazonaws.com/dev/users/get-url?code=${id}`)
     .catch(error => {
       console.error('error', error)
       AlertIOS.alert('error ' + error)
@@ -97,30 +89,19 @@ class ReactProject extends Component {
     this.getInfo(e.data).then(res => {
       const { body } = res;
       let item = null;
-      console.log("body ----------", body)
-      
-      // if (body && body.length) {
-      //   item = {
-      //     imgSrc: body[0].image,
-      //     name: body[0].title && body[0].title.slice(0, 19) + '...',
-      //     price: body[0].price || 0
-      //   }
-      // }
-
-      console.log("items ----------", items)
-      if (body && body.length) {
-        item = body[0];
-        items.add(item, 'upcCodeSearch')
+      if (body) {
+        item = body;
+        items.add(item)
              .then(() => {
                 item = items.last();
-                let total = this.state.total + item.price;
-
-                this.setState({total})
+                total.add(item.price)
+                this.setState({total: total.amount()})
                 AlertIOS.alert(`Scanned! ${item.name}`)
              })
               .catch(err => {
                 AlertIOS.alert(
                     "Barcode Found! but item does not exist in inventory. Please contanct store manager",
+                    "error " + err,
                     "Type: " + e.type + "\nData: " + e.data
                 );
               })

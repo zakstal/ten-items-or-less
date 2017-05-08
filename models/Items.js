@@ -14,7 +14,7 @@ class Items {
     }
 
     add(item, type) {
-        return new Promise((resove, reject) => {
+        return new Promise((reslove, reject) => {
             const newItem = new Item(item, type);
             const {isValid, message } = newItem.validate();
             console.log('isValid*************', isValid)
@@ -27,6 +27,10 @@ class Items {
                 reject(message)
             }
         })
+    }
+
+    remove(id) {
+        _.pullAllWith(this.items, [{id: id}], (item, val) => item.id === val.id);
     }
 
     map(func) {

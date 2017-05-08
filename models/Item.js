@@ -28,13 +28,14 @@ class Item {
         }
 
         this.imgSrc = newObj.imgSrc;
-        this.name = newObj.name;
+        this.name = newObj.name && newObj.name.slice(19, 39) + '...';;
         this.price = newObj.price;
+        this.id = newObj.id;
     }
 
     validate() {
         return {
-            isValid: !Boolean(this.imgSrc) && !Boolean(this.name),
+            isValid: true,//!Boolean(this.imgSrc) && !Boolean(this.name),
             message: 'item not found'
         }
     }
