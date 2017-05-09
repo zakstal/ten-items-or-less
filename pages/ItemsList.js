@@ -31,7 +31,8 @@ class CheckoutPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Please show to a representative</Text>
+        <Text style={styles.header}>Please show to a representative</Text>
+        <Text style={styles.header}>Total: ${total.grandTotal()}</Text>
          <ScrollView style={styles.items}>
          {  items.map((item, i) =>  
               <Item 
@@ -51,6 +52,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  header: {
+    marginLeft: 20,
+    marginBottom: 20,
+    fontSize: 18
+  }
 });
 
 export default CheckoutPage;
