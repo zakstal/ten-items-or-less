@@ -29,6 +29,10 @@ class Total {
         return parseFloat(this.total, 10).toFixed(2);
     }
 
+    isEmpty() {
+        return this.total <= 0
+    }
+
     tax() {
         return parseFloat(this.total * TAX_PERCENT / 100, 10).toFixed(2);
     }

@@ -36,7 +36,7 @@ class CheckoutPage extends Component {
   }
 
   payNow() {
-    if (total.amount() === 0) {
+    if (total.isEmpty()) {
       AlertIOS.alert(
         'No items in your cart',
         null,
@@ -75,7 +75,7 @@ class CheckoutPage extends Component {
       total.pay()
       this.setState({isCheckingOut: false})
       this.props.navigation.navigate('ItemsList');
-    }, 3000)
+    }, 1000)
   }
   render() {
 

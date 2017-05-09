@@ -33,7 +33,7 @@ class Item extends Component {
   }
 
   render() {
-    const { imgSrc, name, price, onPressDelete } = this.props;
+    const { imgSrc, name, price, onPressDelete, disabled, isListed } = this.props;
 
     const config = {
       velocityThreshold: 0.3,
@@ -51,7 +51,8 @@ class Item extends Component {
     return (
        <Swipeout
           right={swipeoutBtns}
-          style={styles.container}
+          style={isListed ? styles.containerListed : styles.container}
+          disabled={disabled}
           >
         <View style={styles.item}>
           <Image style={styles.img} source={{uri: imgSrc}}/>
@@ -77,6 +78,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     marginLeft: 10,
+  },
+  containerListed: {
+    marginTop: 0,
+    marginRight: 0,
+    marginLeft: 0,
   },
   item: {
     // border: 1px solid #eee,   
@@ -105,7 +111,7 @@ const styles = StyleSheet.create({
   },
   img: {
     width: 80,
-    height: 80
+    height: '100%'
     // border: 1px solid #eee;    
   }
 });

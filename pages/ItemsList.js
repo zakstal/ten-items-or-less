@@ -31,11 +31,12 @@ class CheckoutPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.header}>Please show to a representative</Text>
-        <Text style={styles.header}>Total: ${total.grandTotal()}</Text>
+        <Text style={[styles.header, styles.heading]}>Please show to a representative</Text>
+        <Text style={[styles.header, {color: '#81C22D'}]}>Paid! ${total.grandTotal()}</Text>
          <ScrollView style={styles.items}>
          {  items.map((item, i) =>  
               <Item 
+                isListed={true}
                 key={item.name + i}
                 {...item}
                 
@@ -52,9 +53,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
+  heading: {
+    marginTop: 20, 
+    fontWeight: 'bold'
+  },
   header: {
     marginLeft: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     fontSize: 18
   }
 });

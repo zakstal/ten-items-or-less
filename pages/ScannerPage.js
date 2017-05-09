@@ -35,6 +35,7 @@ class ReactProject extends Component {
   }
 
   render() {
+    console.log('can scan ---------------', this.state.canScan)
     return (
       <View style={styles.container}>
         <View style={styles.cameraContainer}>
@@ -42,6 +43,10 @@ class ReactProject extends Component {
             onBarCodeRead={(e) => this.onBarCodeRead(e)}
           >
             <View style={styles.bracketLeft}></View>
+            { !this.state.canScan ?
+              <Text style={{padding: 10}}> Scanning...</Text>
+              : <Text></Text>
+            }
             <View style={styles.bracketRight}></View>
           </Scanner>
         </View>
@@ -86,6 +91,7 @@ class ReactProject extends Component {
     }
 
     this.canScan = false
+    this.setState({canScan: false});
     this.getInfo(e.data).then(res => {
       const { body } = res;
       let item = null;
@@ -96,9 +102,14 @@ class ReactProject extends Component {
                 item = items.last();
                 total.add(item.price)
                 this.setState({total: total.amount()})
-                // AlertIOS.alert(`Scanned! ${item.name}`)
+    
+                const timeout = setTimeout(() => {
+                    this.setState({canScan: true});
+                    this.canScan = true
+                }, 500);
              })
               .catch(err => {
+                this.setState({canScan: false});
                 AlertIOS.alert(
                     "Barcode Found! but item does not exist in inventory. Please contanct store manager",
                     "error " + err,
@@ -108,13 +119,6 @@ class ReactProject extends Component {
       } else {
         AlertIOS.alert("No Item found");
       }
-
-      this.setState({canScan: false});
-    
-      const timeout = setTimeout(() => {
-          this.setState({canScan: true});
-          this.canScan = true
-      }, 2000);
 
     })
   }
