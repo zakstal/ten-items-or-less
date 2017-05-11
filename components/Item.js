@@ -52,13 +52,13 @@ class Item extends Component {
        <Swipeout
           right={swipeoutBtns}
           style={isListed ? styles.containerListed : styles.container}
-          disabled={disabled}
+          disabled={!isListed}
           >
         <View style={styles.item}>
           <Image style={styles.img} source={{uri: imgSrc}}/>
             <View>
-              <Text style={styles.name}>{name}</Text>
-              <Text style={styles.price}>${price}</Text>
+              <Text style={isListed ? styles.nameListed : styles.name}>{name}</Text>
+              <Text style={isListed ? styles.priceListed : styles.price}>${price}</Text>
             </View>
         </View>
       </Swipeout>
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     flexDirection: 'row',
     paddingTop: 10,
+    paddingBottom: 10,
     paddingLeft: 10
 
     // padding: 10,
@@ -103,11 +104,22 @@ const styles = StyleSheet.create({
     fontSize: 40,
     // font-family: "LeagueGothic","Lucida Sans","Lucida Grande",sans-serif,
   },
+  priceListed: {
+    color: '#81C22D',
+    marginTop: 6,
+    marginLeft: 20,
+    fontSize: 20,
+  },
   name: {
       marginTop: 3,
       marginLeft: 20,
       fontSize: 15,
       // font-family: 'Lucida Sans','Lucida Grande',sans-serif,
+  },
+  nameListed: {
+    marginTop: 3,
+      marginLeft: 20,
+    fontSize: 20,
   },
   img: {
     width: 80,
